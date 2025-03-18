@@ -5,7 +5,7 @@ A GraphQL CodeGen plugin for generating persisted query manifests.
 ## Installation
 
 ```bash
-pnpm add -D graphql-codegen-persisted-query-list
+pnpm add -D graphql-codegen-persisted-queries
 ```
 
 ## Usage
