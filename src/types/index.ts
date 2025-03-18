@@ -1,16 +1,20 @@
-import type { FragmentDefinitionNode, OperationDefinitionNode, OperationTypeNode } from 'graphql';
+import type {
+  FragmentDefinitionNode,
+  OperationDefinitionNode,
+  OperationTypeNode,
+} from 'graphql';
 import type { PluginFunction } from '@graphql-codegen/plugin-helpers';
 
 /**
  * Configuration for the persisted query generator plugin
  */
 export interface PluginConfig {
-  /** 
+  /**
    * Output format - 'server' generates hash->operation mapping,
    * 'client' generates operation->hash mapping
    */
   output: 'server' | 'client';
-  
+
   /**
    * Hash algorithm to use (defaults to 'sha256')
    */
@@ -54,7 +58,9 @@ export type ClientOperationListManifest = Record<string, string>;
 /**
  * Union type for both manifest formats
  */
-export type OperationListManifest = ServerOperationListManifest | ClientOperationListManifest;
+export type OperationListManifest =
+  | ServerOperationListManifest
+  | ClientOperationListManifest;
 
 /**
  * Internal type for a GraphQL definition

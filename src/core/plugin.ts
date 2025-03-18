@@ -4,21 +4,17 @@ import { generateClientManifest, generateServerManifest } from './generator';
 
 /**
  * GraphQL CodeGen plugin for generating persisted operation manifests
- * 
+ *
  * @param _schema - GraphQL schema (unused)
  * @param documents - GraphQL documents to process
  * @param config - Plugin configuration
  * @returns JSON string representation of the generated manifest
  * @throws Error if no documents are provided or output format is not specified
- * 
+ *
  * For GraphQL over HTTP specification compliance, set `includeAlgorithmPrefix: true`
  * to enable the "Prefixed Document Identifier" format (e.g., `sha256:abc123...`).
  */
-export const plugin: PersistedQueryPlugin = (
-  _schema,
-  documents,
-  config,
-) => {
+export const plugin: PersistedQueryPlugin = (_schema, documents, config) => {
   // Validate input documents
   if (
     !documents ||
@@ -35,9 +31,17 @@ export const plugin: PersistedQueryPlugin = (
 
   // Generate appropriate manifest format based on configuration
   if (config.output === 'client') {
-    return JSON.stringify(generateClientManifest(documentNodes, config), null, '   ');
+    return JSON.stringify(
+      generateClientManifest(documentNodes, config),
+      null,
+      '   ',
+    );
   } else if (config.output === 'server') {
-    return JSON.stringify(generateServerManifest(documentNodes, config), null, '   ');
+    return JSON.stringify(
+      generateServerManifest(documentNodes, config),
+      null,
+      '   ',
+    );
   } else {
     throw new Error("Must configure output to 'server' or 'client'");
   }

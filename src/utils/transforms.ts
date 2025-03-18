@@ -1,10 +1,10 @@
-import { 
-  DocumentNode, 
-  FieldNode, 
-  Kind, 
-  OperationDefinitionNode, 
-  print, 
-  visit 
+import {
+  DocumentNode,
+  FieldNode,
+  Kind,
+  OperationDefinitionNode,
+  print,
+  visit,
 } from 'graphql';
 import { Definition } from '../types';
 
@@ -21,18 +21,20 @@ const TYPENAME_FIELD: FieldNode = {
 
 /**
  * Prints an array of definitions as a single string
- * 
+ *
  * @param definitions - Array of GraphQL definitions to print
  * @returns Printed string representation
  */
-export function printDefinitions(definitions: (Definition | DocumentNode)[]): string {
+export function printDefinitions(
+  definitions: (Definition | DocumentNode)[],
+): string {
   return definitions.map(print).join('\n\n');
 }
 
 /**
  * Adds __typename to all selection sets in a document
  * Adapted from Apollo Client
- * 
+ *
  * @param doc - GraphQL document node
  * @returns Document with __typename fields added
  */
@@ -61,7 +63,7 @@ export function addTypenameToDocument(doc: DocumentNode): DocumentNode {
             (selection as FieldNode).name.value === '__typename'
           );
         });
-        
+
         // Skip if this is an introspection query
         const isIntrospection = selections.some((selection) => {
           return (
@@ -69,7 +71,7 @@ export function addTypenameToDocument(doc: DocumentNode): DocumentNode {
             (selection as FieldNode).name.value.startsWith('__')
           );
         });
-        
+
         if (hasTypename || isIntrospection) {
           return;
         }

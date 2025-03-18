@@ -1,10 +1,10 @@
 import { DocumentNode, visit } from 'graphql';
-import { 
+import {
   PluginConfig,
   ClientOperationListManifest,
   ServerOperationListManifest,
   PersistedQueryManifestOperation,
-  ProcessedOperation
+  ProcessedOperation,
 } from '../types';
 import { createHash } from '../utils/hashing';
 import { addTypenameToDocument } from '../utils/transforms';
@@ -13,17 +13,20 @@ import { printDefinitions } from '../utils/transforms';
 
 /**
  * Process documents and generate operation hashes with their details
- * 
+ *
  * @param docs - Array of GraphQL document nodes
  * @param config - Plugin configuration
  * @returns Array of processed operations with their details
  * @throws Error if an operation is missing a name
  */
-function processOperations(docs: DocumentNode[], config: PluginConfig): ProcessedOperation[] {
+function processOperations(
+  docs: DocumentNode[],
+  config: PluginConfig,
+): ProcessedOperation[] {
   // Add __typename to all selection sets
   const processedDocs = docs.map(addTypenameToDocument);
   const operations: ProcessedOperation[] = [];
-  
+
   const knownFragments = findFragments(processedDocs);
 
   for (const doc of processedDocs) {
@@ -43,14 +46,14 @@ function processOperations(docs: DocumentNode[], config: PluginConfig): Processe
           const query = printDefinitions([def, ...usedFragments.values()]);
 
           const hash = createHash(query, config);
-          
+
           operations.push({
             name: operationName,
             hash,
             type: def.operation,
             query,
             definition: def,
-            fragments: Array.from(usedFragments.values())
+            fragments: Array.from(usedFragments.values()),
           });
         },
       },
@@ -63,7 +66,7 @@ function processOperations(docs: DocumentNode[], config: PluginConfig): Processe
 /**
  * Generates a client-side persisted query manifest
  * Client manifests map operation names to their hash
- * 
+ *
  * @param docs - Array of GraphQL document nodes
  * @param config - Plugin configuration
  * @returns Client-side manifest object
@@ -75,7 +78,7 @@ export function generateClientManifest(
 ): ClientOperationListManifest {
   const operations = processOperations(docs, config);
   const manifest: ClientOperationListManifest = {};
-  
+
   for (const operation of operations) {
     manifest[operation.name] = operation.hash;
   }
@@ -86,7 +89,7 @@ export function generateClientManifest(
 /**
  * Generates a server-side persisted query manifest
  * Server manifests map query hashes to operation details
- * 
+ *
  * @param docs - Array of GraphQL document nodes
  * @param config - Plugin configuration
  * @returns Server-side manifest object
@@ -97,20 +100,20 @@ export function generateServerManifest(
   config: PluginConfig,
 ): ServerOperationListManifest {
   const operations = processOperations(docs, config);
-  
+
   const manifest: ServerOperationListManifest = {
     format: 'apollo-persisted-query-manifest',
     version: 1,
     operations: {},
   };
-  
+
   for (const operation of operations) {
     const operationDetails: PersistedQueryManifestOperation = {
       type: operation.type,
       name: operation.name,
       body: operation.query,
     };
-    
+
     manifest.operations[operation.hash] = operationDetails;
   }
 
