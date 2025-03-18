@@ -169,6 +169,33 @@ pnpm test
 pnpm test:watch
 ```
 
+### Releasing
+
+This package follows semantic versioning. To release a new version:
+
+1. Choose the appropriate release type based on your changes:
+   ```bash
+   # For bug fixes and minor changes (0.0.x)
+   pnpm release:patch
+
+   # For new features - backward compatible (0.x.0)
+   pnpm release:minor
+
+   # For breaking changes (x.0.0)
+   pnpm release:major
+   ```
+
+2. Push the new tag to GitHub:
+   ```bash
+   git push --follow-tags
+   ```
+
+3. The GitHub Actions workflow will automatically:
+   - Validate that the tag version matches the package.json version
+   - Run tests and build the package
+   - Publish to npm (requires npm authentication)
+   - Create a GitHub Release for the tag
+
 ## License
 
 MIT
