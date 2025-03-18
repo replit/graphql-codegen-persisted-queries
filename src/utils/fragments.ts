@@ -1,13 +1,13 @@
-import { 
-  DocumentNode, 
-  FragmentDefinitionNode, 
+import {
+  DocumentNode,
+  FragmentDefinitionNode,
   OperationDefinitionNode,
-  visit 
+  visit,
 } from 'graphql';
 
 /**
  * Extracts all fragment definitions from an array of documents
- * 
+ *
  * @param docs - Array of GraphQL document nodes to scan
  * @returns A map of fragment names to their definitions
  */
@@ -31,7 +31,7 @@ export function findFragments(
 
 /**
  * Finds all fragments used in an operation or fragment, including nested fragments
- * 
+ *
  * @param operation - The operation or fragment to analyze
  * @param knownFragments - Map of all available fragments
  * @param _usedFragments - Optional accumulator for recursive calls
@@ -52,13 +52,13 @@ export function findUsedFragments(
       enter(node) {
         const fragmentName = node.name.value;
         const fragment = knownFragments.get(fragmentName);
-        
+
         if (fragment) {
           // Skip if we've already processed this fragment to avoid circular references
           if (usedFragments.has(fragmentName)) {
             return;
           }
-          
+
           usedFragments.set(fragmentName, fragment);
           // Recursively find nested fragments
           findUsedFragments(fragment, knownFragments, usedFragments);
