@@ -1,0 +1,38 @@
+{
+  "name": "@replit/graphql-codegen-persisted-queries",
+  "version": "0.0.1",
+  "description": "GraphQL codegen plugin to generate persisted query list manifests",
+  "main": "index.ts",
+  "scripts": {
+    "build": "tsup"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/replit/graphql-codegen-persisted-queries.git"
+  },
+  "keywords": [
+    "GraphQL",
+    "Codegen",
+    "PQL",
+    "Persisted",
+    "Query"
+  ],
+  "author": "darsh.patel@repl.it",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/replit/graphql-codegen-persisted-queries/issues"
+  },
+  "homepage": "https://github.com/replit/graphql-codegen-persisted-queries#readme",
+  "packageManager": "pnpm@8.15.5",
+  "devDependencies": {
+    "@stylistic/eslint-plugin-js": "^4.2.0",
+    "@stylistic/eslint-plugin-ts": "^4.2.0",
+    "@typescript-eslint/eslint-plugin": "^8.26.1",
+    "@typescript-eslint/parser": "^8.26.1",
+    "eslint": "^9.22.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "prettier": "^3.5.3",
+    "tsup": "^8.4.0"
+  }
+}
