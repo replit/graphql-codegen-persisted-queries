@@ -1,4 +1,4 @@
-import type { FragmentDefinitionNode, Location, OperationDefinitionNode } from 'graphql';
+import type { FragmentDefinitionNode, OperationDefinitionNode, OperationTypeNode } from 'graphql';
 import type { PluginFunction } from '@graphql-codegen/plugin-helpers';
 
 /**
@@ -30,7 +30,7 @@ export interface PluginConfig {
  */
 export interface PersistedQueryManifestOperation {
   /** Operation type (query, mutation, subscription) */
-  type: 'query' | 'mutation' | 'subscription';
+  type: OperationTypeNode;
   /** Operation name */
   name: string;
   /** Full operation body text */
@@ -38,23 +38,23 @@ export interface PersistedQueryManifestOperation {
 }
 
 /**
- * Server-side persisted query manifest format
+ * Server-side persisted operation manifest format
  */
-export interface ServerQueryListManifest {
+export interface ServerOperationListManifest {
   format: 'apollo-persisted-query-manifest';
   version: 1;
   operations: Record<string, PersistedQueryManifestOperation>;
 }
 
 /**
- * Client-side persisted query manifest format
+ * Client-side persisted operation manifest format
  */
-export type ClientQueryListManifest = Record<string, string>;
+export type ClientOperationListManifest = Record<string, string>;
 
 /**
  * Union type for both manifest formats
  */
-export type QueryListManifest = ServerQueryListManifest | ClientQueryListManifest;
+export type OperationListManifest = ServerOperationListManifest | ClientOperationListManifest;
 
 /**
  * Internal type for a GraphQL definition
@@ -62,35 +62,16 @@ export type QueryListManifest = ServerQueryListManifest | ClientQueryListManifes
 export type Definition = FragmentDefinitionNode | OperationDefinitionNode;
 
 /**
- * Query identifier metadata
+ * Represents a processed GraphQL operation with hash and query details
  */
-export interface QueryIdentifier {
-  /**
-   * The document identifier hash, optionally with algorithm prefix (e.g. "sha256:abc123...")
-   * when includeAlgorithmPrefix is enabled
-   */
+export interface ProcessedOperation {
+  name: string;
   hash: string;
-  
-  /**
-   * The full query string
-   */
+  type: OperationTypeNode;
   query: string;
-  
-  /**
-   * Whether the operation uses variables
-   */
-  usesVariables: boolean;
-  
-  /**
-   * Source location information (if available)
-   */
-  loc?: Location;
+  definition: OperationDefinitionNode;
+  fragments: FragmentDefinitionNode[];
 }
-
-/**
- * Map of query names to their identifiers
- */
-export type QueryIdentifierMap = Record<string, QueryIdentifier>;
 
 /**
  * Plugin function type

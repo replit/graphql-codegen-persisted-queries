@@ -1,10 +1,9 @@
 import { DocumentNode } from 'graphql';
 import { PersistedQueryPlugin } from '../types';
-import { generateQueryIds } from './generator';
-import { generateClientManifest, generateServerManifest } from './manifests';
+import { generateClientManifest, generateServerManifest } from './generator';
 
 /**
- * GraphQL CodeGen plugin for generating persisted query manifests
+ * GraphQL CodeGen plugin for generating persisted operation manifests
  * 
  * @param _schema - GraphQL schema (unused)
  * @param documents - GraphQL documents to process
@@ -26,7 +25,7 @@ export const plugin: PersistedQueryPlugin = (
     documents.length === 0 ||
     documents.some((doc) => !doc?.document)
   ) {
-    throw new Error('Found no documents to generate persisted query ids.');
+    throw new Error('Found no documents to generate persisted operation ids.');
   }
 
   // Extract document nodes
@@ -34,14 +33,11 @@ export const plugin: PersistedQueryPlugin = (
     .map((doc) => doc.document)
     .filter((doc): doc is DocumentNode => doc !== undefined);
 
-  // Generate query identifiers
-  const queries = generateQueryIds(documentNodes, config);
-
   // Generate appropriate manifest format based on configuration
   if (config.output === 'client') {
-    return JSON.stringify(generateClientManifest(queries), null, '   ');
+    return JSON.stringify(generateClientManifest(documentNodes, config), null, '   ');
   } else if (config.output === 'server') {
-    return JSON.stringify(generateServerManifest(queries), null, '   ');
+    return JSON.stringify(generateServerManifest(documentNodes, config), null, '   ');
   } else {
     throw new Error("Must configure output to 'server' or 'client'");
   }
