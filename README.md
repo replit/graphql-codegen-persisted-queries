@@ -145,6 +145,30 @@ The plugin's workflow is straightforward but powerful:
 
 All generated hashes use the algorithm you specify (default: `sha256`). You can enable the "Prefixed Document Identifier" format (e.g., `sha256:abc123...`) for compliance with the [GraphQL over HTTP specification](https://github.com/graphql/graphql-over-http/blob/52d56fb36d51c17e08a920510a23bdc2f6a720be/spec/Appendix%20A%20--%20Persisted%20Documents.md#sha256-hex-document-identifier) by setting `includeAlgorithmPrefix: true`.
 
+## Development
+
+### Setup
+
+```bash
+# Install dependencies
+pnpm install
+
+# Watch mode for development
+pnpm dev
+```
+
+### Testing
+
+The plugin includes a comprehensive test suite built with Vitest:
+
+```bash
+# Run tests
+pnpm test
+
+# Run tests in watch mode
+pnpm test:watch
+```
+
 ## License
 
 MIT

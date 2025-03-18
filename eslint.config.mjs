@@ -3,6 +3,9 @@ import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   eslint.configs.recommended,
+  {
+    ignores: ["dist/**/*", "eslint.config.mjs"],
+  },
   ...tseslint.configs.strict,
   ...tseslint.configs.stylistic,
   {
@@ -11,9 +14,5 @@ export default tseslint.config(
             project: "./tsconfig.json",
         },
     },    
-  },
-  {
-    ignores: ["dist/**/*"],
-    files: ["**/*.ts"],
   },
 );

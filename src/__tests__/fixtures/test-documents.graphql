@@ -1,0 +1,63 @@
+fragment UserFields on User {
+  id
+  name
+  email
+}
+
+fragment PostFields on Post {
+  id
+  title
+  content
+}
+
+query HelloQuery {
+  hello
+}
+
+query GetUser($id: ID!) {
+  user(id: $id) {
+    ...UserFields
+    posts {
+      ...PostFields
+    }
+  }
+}
+
+query GetUsers {
+  users {
+    ...UserFields
+  }
+}
+
+query GetPost($id: ID!) {
+  post(id: $id) {
+    ...PostFields
+    author {
+      ...UserFields
+    }
+  }
+}
+
+query GetPosts {
+  posts {
+    ...PostFields
+  }
+}
+
+mutation CreateUser($name: String!, $email: String) {
+  createUser(name: $name, email: $email) {
+    ...UserFields
+  }
+}
+
+mutation UpdateUser($id: ID!, $name: String, $email: String) {
+  updateUser(id: $id, name: $name, email: $email) {
+    ...UserFields
+  }
+}
+
+subscription OnUserCreated {
+  userCreated {
+    ...UserFields
+  }
+}
