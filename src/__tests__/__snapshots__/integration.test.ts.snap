@@ -1,0 +1,197 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Persisted Query Plugin Integration Tests > Client Manifest Generation > generates valid client manifest with algorithm prefix 1`] = `
+{
+  "CreateUser": "sha256:ba9e16c83890d5d9ecabcb415610364fee2932887b2bc393c7143b71aab269b3",
+  "GetPost": "sha256:3c6302a47f6243d487fac04c0af0f5f95e0187c17cb1a27e06c7a7c9f0488fd4",
+  "GetPosts": "sha256:ae215a6ca2480a8c5c721801d9f943cbb54055ce3bdf855ef21bd255b6bbfdde",
+  "GetUser": "sha256:3ac4d5cb7197d3811eedb53feb1db0615ce67aaa91fe1f8d9175e12d37eb6239",
+  "GetUsers": "sha256:85306f39b57686912f3e429274c2448e2b4a94f39293875f42d674a7363574ca",
+  "HelloQuery": "sha256:789ccee2f24e6bec795f6d345529a1fc195e282453956a69eef4209b06b347a9",
+  "OnUserCreated": "sha256:3af4547b737d2086c4a7f6f74f61e310c1c9d1a54c6218f34edfa592a43bf7b5",
+  "UpdateUser": "sha256:2ed387ebd9ffea9ea9b42fb1c4c2d149d3c5c45c2c8603ba4ffc755d296dc794",
+}
+`;
+
+exports[`Persisted Query Plugin Integration Tests > Client Manifest Generation > generates valid client manifest with custom algorithm 1`] = `
+{
+  "CreateUser": "08382963981d862dd2fd2bfe0e9cd207",
+  "GetPost": "79c0b9239ad347d5710bf729c8fdfe66",
+  "GetPosts": "69714bf6547e845a36de493b21f754c8",
+  "GetUser": "0b03e148029a42a67ed0f9c84b96c1ad",
+  "GetUsers": "b584a3ef5982a75fa6ea872c867c4a53",
+  "HelloQuery": "7a65e58a5f2108e855f55246308323a3",
+  "OnUserCreated": "5cdc0f7772d519dd6543d8c1858f0a79",
+  "UpdateUser": "fdec2e64f7bea659f50032796d8e84a6",
+}
+`;
+
+exports[`Persisted Query Plugin Integration Tests > Client Manifest Generation > generates valid client manifest with default options 1`] = `
+{
+  "CreateUser": "ba9e16c83890d5d9ecabcb415610364fee2932887b2bc393c7143b71aab269b3",
+  "GetPost": "3c6302a47f6243d487fac04c0af0f5f95e0187c17cb1a27e06c7a7c9f0488fd4",
+  "GetPosts": "ae215a6ca2480a8c5c721801d9f943cbb54055ce3bdf855ef21bd255b6bbfdde",
+  "GetUser": "3ac4d5cb7197d3811eedb53feb1db0615ce67aaa91fe1f8d9175e12d37eb6239",
+  "GetUsers": "85306f39b57686912f3e429274c2448e2b4a94f39293875f42d674a7363574ca",
+  "HelloQuery": "789ccee2f24e6bec795f6d345529a1fc195e282453956a69eef4209b06b347a9",
+  "OnUserCreated": "3af4547b737d2086c4a7f6f74f61e310c1c9d1a54c6218f34edfa592a43bf7b5",
+  "UpdateUser": "2ed387ebd9ffea9ea9b42fb1c4c2d149d3c5c45c2c8603ba4ffc755d296dc794",
+}
+`;
+
+exports[`Persisted Query Plugin Integration Tests > Server Manifest Generation > generates valid server manifest with default options 1`] = `
+{
+  "format": "apollo-persisted-query-manifest",
+  "operations": {
+    "2ed387ebd9ffea9ea9b42fb1c4c2d149d3c5c45c2c8603ba4ffc755d296dc794": {
+      "body": "mutation UpdateUser($id: ID!, $name: String, $email: String) {
+  updateUser(id: $id, name: $name, email: $email) {
+    ...UserFields
+    __typename
+  }
+}
+
+fragment UserFields on User {
+  id
+  name
+  email
+  __typename
+}",
+      "name": "UpdateUser",
+      "type": "mutation",
+    },
+    "3ac4d5cb7197d3811eedb53feb1db0615ce67aaa91fe1f8d9175e12d37eb6239": {
+      "body": "query GetUser($id: ID!) {
+  user(id: $id) {
+    ...UserFields
+    posts {
+      ...PostFields
+      __typename
+    }
+    __typename
+  }
+}
+
+fragment UserFields on User {
+  id
+  name
+  email
+  __typename
+}
+
+fragment PostFields on Post {
+  id
+  title
+  content
+  __typename
+}",
+      "name": "GetUser",
+      "type": "query",
+    },
+    "3af4547b737d2086c4a7f6f74f61e310c1c9d1a54c6218f34edfa592a43bf7b5": {
+      "body": "subscription OnUserCreated {
+  userCreated {
+    ...UserFields
+    __typename
+  }
+}
+
+fragment UserFields on User {
+  id
+  name
+  email
+  __typename
+}",
+      "name": "OnUserCreated",
+      "type": "subscription",
+    },
+    "3c6302a47f6243d487fac04c0af0f5f95e0187c17cb1a27e06c7a7c9f0488fd4": {
+      "body": "query GetPost($id: ID!) {
+  post(id: $id) {
+    ...PostFields
+    author {
+      ...UserFields
+      __typename
+    }
+    __typename
+  }
+}
+
+fragment PostFields on Post {
+  id
+  title
+  content
+  __typename
+}
+
+fragment UserFields on User {
+  id
+  name
+  email
+  __typename
+}",
+      "name": "GetPost",
+      "type": "query",
+    },
+    "789ccee2f24e6bec795f6d345529a1fc195e282453956a69eef4209b06b347a9": {
+      "body": "query HelloQuery {
+  hello
+}",
+      "name": "HelloQuery",
+      "type": "query",
+    },
+    "85306f39b57686912f3e429274c2448e2b4a94f39293875f42d674a7363574ca": {
+      "body": "query GetUsers {
+  users {
+    ...UserFields
+    __typename
+  }
+}
+
+fragment UserFields on User {
+  id
+  name
+  email
+  __typename
+}",
+      "name": "GetUsers",
+      "type": "query",
+    },
+    "ae215a6ca2480a8c5c721801d9f943cbb54055ce3bdf855ef21bd255b6bbfdde": {
+      "body": "query GetPosts {
+  posts {
+    ...PostFields
+    __typename
+  }
+}
+
+fragment PostFields on Post {
+  id
+  title
+  content
+  __typename
+}",
+      "name": "GetPosts",
+      "type": "query",
+    },
+    "ba9e16c83890d5d9ecabcb415610364fee2932887b2bc393c7143b71aab269b3": {
+      "body": "mutation CreateUser($name: String!, $email: String) {
+  createUser(name: $name, email: $email) {
+    ...UserFields
+    __typename
+  }
+}
+
+fragment UserFields on User {
+  id
+  name
+  email
+  __typename
+}",
+      "name": "CreateUser",
+      "type": "mutation",
+    },
+  },
+  "version": 1,
+}
+`;
