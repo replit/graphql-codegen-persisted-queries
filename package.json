@@ -1,10 +1,21 @@
 {
   "name": "@replit/graphql-codegen-persisted-queries",
   "version": "0.0.1",
-  "description": "GraphQL codegen plugin to generate persisted query list manifests",
-  "main": "index.ts",
+  "description": "GraphQL plugin to generate persisted query manifests",
+  "main": "dist/index.mjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.mts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
-    "build": "tsup"
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --ext .ts",
+    "clean": "rm -rf dist",
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -24,14 +35,21 @@
   },
   "homepage": "https://github.com/replit/graphql-codegen-persisted-queries#readme",
   "packageManager": "pnpm@8.15.5",
+  "peerDependencies": {
+    "@graphql-codegen/plugin-helpers": "^5.0.0",
+    "graphql": "^16.0.0"
+  },
   "devDependencies": {
+    "@graphql-codegen/plugin-helpers": "^5.0.0",
     "@stylistic/eslint-plugin-js": "^4.2.0",
     "@stylistic/eslint-plugin-ts": "^4.2.0",
+    "@types/node": "^22.13.10",
     "@typescript-eslint/eslint-plugin": "^8.26.1",
     "@typescript-eslint/parser": "^8.26.1",
     "eslint": "^9.22.0",
     "eslint-config-prettier": "^10.1.1",
     "eslint-plugin-prettier": "^5.2.3",
+    "graphql": "^16.8.1",
     "prettier": "^3.5.3",
     "tsup": "^8.4.0"
   }
