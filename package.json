@@ -1,6 +1,6 @@
 {
   "name": "@replit/graphql-codegen-persisted-queries",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "GraphQL Codegen plugin to generate persisted query manifests for server and client",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
