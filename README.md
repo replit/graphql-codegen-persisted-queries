@@ -17,13 +17,13 @@ pnpm add -D @replit/graphql-codegen-persisted-queries
 generates:
   ./generated-gql/persisted-query-manifest/client.json:
     plugins:
-      - graphql-codegen-persisted-query-list
+      - @replit/graphql-codegen-persisted-queries
     config:
       output: client
       
   ./generated-gql/persisted-query-manifest/server.json:
     plugins:
-      - graphql-codegen-persisted-query-list
+      - @replit/graphql-codegen-persisted-queries
     config:
       output: server
       includeAlgorithmPrefix: true # Enable prefixed document identifiers for compliance with GraphQL over HTTP spec
@@ -40,14 +40,14 @@ const config: CodegenConfig = {
   generates: {
     './generated-gql/persisted-query-manifest/client.json': {
       documents: ['./client/**/*.{graphql,gql}', './pages/**/*.{graphql,gql}'],
-      plugins: ['graphql-codegen-persisted-query-list'],
+      plugins: ['@replit/graphql-codegen-persisted-queries'],
       config: {
         output: 'client',
       },
     },
     './generated-gql/persisted-query-manifest/server.json': {
       documents: ['./client/**/*.{graphql,gql}', './pages/**/*.{graphql,gql}'],
-      plugins: ['graphql-codegen-persisted-query-list'],
+      plugins: ['@replit/graphql-codegen-persisted-queries'],
       config: {
         output: 'server',
         includeAlgorithmPrefix: true, // Enable prefixed document identifiers for compliance with GraphQL over HTTP spec
@@ -135,13 +135,16 @@ With `includeAlgorithmPrefix: true`:
 
 ## How It Works
 
-The plugin's workflow is straightforward but powerful:
+The plugin's workflow is straightforward:
 
 1. It collects all GraphQL operations from your codebase
-2. It extracts and resolves all fragments used in each operation
-3. It outputs a manifest file in your chosen format (client or server)
+2. It adds `__typename` to all selection sets in the operations for proper type resolution
+3. It identifies all fragments used in each operation, resolving them recursively to ensure all nested fragments are included
+4. It orders the documents with operation definitions first, followed by fragments to ensure hash consistency
+5. It generates operation hashes using the specified algorithm (default: `sha256`)
+6. It outputs a manifest file in your chosen format (client or server)
 
-All generated hashes use the algorithm you specify (default: `sha256`). You can enable the "Prefixed Document Identifier" format (e.g., `sha256:abc123...`) for compliance with the [GraphQL over HTTP specification](https://github.com/graphql/graphql-over-http/blob/52d56fb36d51c17e08a920510a23bdc2f6a720be/spec/Appendix%20A%20--%20Persisted%20Documents.md#sha256-hex-document-identifier) by setting `includeAlgorithmPrefix: true`.
+You can enable the "Prefixed Document Identifier" format (e.g., `sha256:abc123...`) for compliance with the [GraphQL over HTTP specification (RFC at the time of publishing this package)](https://github.com/graphql/graphql-over-http/blob/52d56fb36d51c17e08a920510a23bdc2f6a720be/spec/Appendix%20A%20--%20Persisted%20Documents.md#sha256-hex-document-identifier) by setting `includeAlgorithmPrefix: true`.
 
 ## Development
 
