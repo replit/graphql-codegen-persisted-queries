@@ -1,18 +1,16 @@
-# GraphQL CodeGen Persisted Query List
+# GraphQL CodeGen Persisted Queries
 
-A GraphQL CodeGen plugin for generating persisted query manifests.
+A GraphQL Codegen plugin for generating persisted query manifests for server and client.
 
 ## Installation
 
 ```bash
-pnpm add -D graphql-codegen-persisted-queries
+pnpm add -D @replit/graphql-codegen-persisted-queries
 ```
 
 ## Usage
 
-Add the plugin to your GraphQL CodeGen configuration:
-
-### Using YAML Config
+### YAML Config
 
 ```yml
 # codegen.yml
@@ -31,7 +29,7 @@ generates:
       includeAlgorithmPrefix: true # Enable prefixed document identifiers for compliance with GraphQL over HTTP spec
 ```
 
-### Using JavaScript/TypeScript Config
+### TypeScript Config
 
 ```typescript
 // codegen.ts
