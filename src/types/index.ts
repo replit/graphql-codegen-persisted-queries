@@ -33,6 +33,8 @@ export interface PluginConfig {
  * Represents a single operation in the persisted query manifest
  */
 export interface PersistedQueryManifestOperation {
+  /** Operation hash */
+  id: string;
   /** Operation type (query, mutation, subscription) */
   type: OperationTypeNode;
   /** Operation name */
@@ -47,7 +49,7 @@ export interface PersistedQueryManifestOperation {
 export interface ServerOperationListManifest {
   format: 'apollo-persisted-query-manifest';
   version: 1;
-  operations: Record<string, PersistedQueryManifestOperation>;
+  operations: PersistedQueryManifestOperation[];
 }
 
 /**

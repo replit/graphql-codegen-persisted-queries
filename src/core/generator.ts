@@ -104,17 +104,18 @@ export function generateServerManifest(
   const manifest: ServerOperationListManifest = {
     format: 'apollo-persisted-query-manifest',
     version: 1,
-    operations: {},
+    operations: [],
   };
 
   for (const operation of operations) {
     const operationDetails: PersistedQueryManifestOperation = {
+      id: operation.hash,
       type: operation.type,
       name: operation.name,
       body: operation.query,
     };
 
-    manifest.operations[operation.hash] = operationDetails;
+    manifest.operations.push(operationDetails);
   }
 
   return manifest;
